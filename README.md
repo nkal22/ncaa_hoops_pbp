@@ -13,7 +13,7 @@ Then, run the following command:
 
 Inside the `scripts` folder, the file called `pbp_script.py` contains all of the functions needed to grab the play-by-play data, and save it to a .csv file.
 
-To call the file, switch into the root directory and run the following prompt from the command line:
+To call the file, switch into the `ncaa_hoops_pbp` directory and run the following prompt from the command line:
 
 `python scripts/pbp_script.py`
 
@@ -41,7 +41,7 @@ Notice that the sport, opponent, and season commands are not needed for the latt
 
 The other file in the `scripts` folder, called `onoffscript.py`, can be used to extract on-off information from the play-by-play data.
 
-To call the file, switch into the root directory and run the following prompt from the command line:
+To call the file, switch into the `ncaa_hoops_pbp` directory and run the following prompt from the command line:
 
 `python scripts/onoffscript.py`
 
