@@ -365,7 +365,7 @@ def add_shot_information(df):
         [
             result_df['event_type'].str.contains('freethrow', case=False),
             result_df['event_type'].str.contains('3pt jumpshot', case=False) | result_df['event_type'].str.contains('Three Point', case=False) | result_df['event_type'].str.contains('3pt', case=False) ,
-            result_df['event_type'].str.contains('2pt jumpshot', case=False) | result_df['event_type'].str.contains('Two Point Jumpshot', case=False) | result_df['event_type'].str.contains('Two Point Jumper', case=False) | result_df['event_type'].str.contains('2pt Jumper', case=False),
+            result_df['event_type'].str.contains(r'(2pt|two point).*?(jumper|jumpshot)', case=False, regex=True),
             result_df['event_type'].str.contains('dunk', case=False),
             result_df['event_type'].str.contains('layup', case=False)
         ],
