@@ -10,11 +10,11 @@ setup(
   version='1.0.0',
   description="Small Package to Extract NCAA Men's and Women's Basketball Play-by-Play Data, and Optionally Extract On-Off Splits",
   license="MIT",
-  author="Nick Kalinowski (@kalidrafts on X and Bluesky)
+  author="Nick Kalinowski (@kalidrafts on X and Bluesky)",
   long_description=long_description,
   packages=[
     'ncaa_hoops_pbp',
     'ncaa_hoops_pbp.scripts'
-  ]
+  ],
   install_requires=requirements,
 )
