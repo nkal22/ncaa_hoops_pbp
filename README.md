@@ -57,5 +57,5 @@ In addition, there is one optional argument:
 
 In the example above, if my Auburn .csv file was called 'Auburn_pbp.csv', I would calculate the on-off splits for lineups that contain *both* Sania Wells and Kharyssa Richardson like so:
 
-Command: `python scripts/onoffscript.py --team Rochester (NY) --players 'Sania Wells' 'Kharyssa Richardson'
+Command: `python scripts/onoffscript.py --team Rochester (NY) --players 'Sania Wells' 'Kharyssa Richardson'`
 
