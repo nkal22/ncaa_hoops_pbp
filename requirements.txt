@@ -1,4 +1,4 @@
-beautifulsoup>=4.13.3
+beautifulsoup4>=4.13.3
 asttokens>=3.0.0
 numpy>=2.2.0
 pandas>=2.2.3
