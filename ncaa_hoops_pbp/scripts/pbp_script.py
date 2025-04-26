@@ -322,9 +322,6 @@ def add_shot_information(df):
     Returns:
     DataFrame with two new columns: 'is_shot' and 'shot_outcome'
     """
-    import pandas as pd
-    import numpy as np
-    import re
     
     # Create a copy to avoid modifying the original
     result_df = df.copy()
@@ -358,8 +355,6 @@ def add_shot_information(df):
             
     
     result_df['event_type'] = result_df['event_type'].str.replace(';', '', regex=False)
-
-    import numpy as np
 
     # Step 1: Define shot_type based on patterns in event_type
     result_df['shot_type'] = np.select(
