@@ -12,6 +12,7 @@ import warnings
 
 # Suppress FutureWarning
 warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=UserWarning)
 
 
 headers = {
@@ -466,7 +467,7 @@ def track_lineups(pbp_data):
     lineups = {team: set(players) for team, players in starting_lineups.items()}
     team_list = list(starting_lineups.keys())
 
-    if len(team_list) == 0:
+    if len(team_list) <= 1:
         print('Incorrect/Nonexistent PBP Data, Skipping...')
         return pbp_data
     else:
