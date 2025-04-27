@@ -427,32 +427,47 @@ def track_lineups(pbp_data):
     # Filter substitution events
     subs = pbp_data[pbp_data['event_type'].str.contains('substitution', case=False)].copy()
 
-
     # Sort substitution events in game order
     subs_sorted = subs.sort_values(by=['period', 'time_remaining'], ascending=[True, False])
     
-    # Track players who have subbed in
+    # Track players who have subbed in and out
     players_subbed_in = defaultdict(set)
+    players_subbed_out = defaultdict(set)
     
     # Starting lineups dict
     starting_lineups = defaultdict(list)
     
-    # Go through each sub event to determine starting lineups
+    # identify all players who appear in the game
+    all_players = defaultdict(set)
+    for _, row in pbp_data.iterrows():
+        if pd.notna(row['team']) and pd.notna(row['player_name']):
+            all_players[row['team']].add(row['player_name'].title())
+
+    all_players = {team: players - {"Team"} for team, players in all_players.items()}
+    
+    # Go through each sub event to determine starting lineups from subs
     for _, row in subs_sorted.iterrows():
         team = row['team']
-        player = row['player_name']
+        player = row['player_name'].title()
         event = row['event_type'].lower()
 
-
         if ('substitution out' in event) or ("Leaves Game" in event):
+            players_subbed_out[team].add(player)
             if player not in players_subbed_in[team] and len(starting_lineups[team]) < 5:
-                starting_lineups[team].append(player.title())
+                starting_lineups[team].append(player)
         elif ('substitution in' in event) or ("Enters Game" in event):
-            players_subbed_in[team].add(player.title())
+            players_subbed_in[team].add(player)
+    
+    # Fix for players who never subbed out
+    for team, players in all_players.items():
+        # Find players who appear in the game but never subbed out
+        never_subbed = players - players_subbed_out[team]
         
-        # Once both teams have 5 starters, we can stop
-        if starting_lineups and all(len(v) == 5 for v in starting_lineups.values()):
-            break
+        # Add these players to the starting lineup if they're not already there
+        for player in never_subbed:
+            if len(starting_lineups[team]) < 5 and player not in starting_lineups[team]:
+                starting_lineups[team].append(player)
+
     
     # Print starting lineups (comment out if not needed)
     for team, lineup in starting_lineups.items():
@@ -466,7 +481,7 @@ def track_lineups(pbp_data):
         print('Incorrect/Nonexistent PBP Data, Skipping...')
         return pbp_data
     else:
-    # Prepare columns to store lineups
+        # Prepare columns to store lineups
         pbp_data['lineup_' + team_list[0]] = None
         pbp_data['lineup_' + team_list[1]] = None
         
