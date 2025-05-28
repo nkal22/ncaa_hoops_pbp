@@ -359,11 +359,11 @@ def add_shot_information(df):
     # Step 1: Define shot_type based on patterns in event_type
     result_df['shot_type'] = np.select(
         [
-            result_df['event_type'].str.contains('freethrow', case=False),
-            result_df['event_type'].str.contains('3pt jumpshot', case=False) | result_df['event_type'].str.contains('Three Point', case=False) | result_df['event_type'].str.contains('3pt', case=False) ,
-            result_df['event_type'].str.contains(r'(2pt|two point).*?(jumper|jumpshot)', case=False, regex=True),
-            result_df['event_type'].str.contains('dunk', case=False),
-            result_df['event_type'].str.contains('layup', case=False)
+            result_df['event_type'].str.contains('freethrow', case=False) & ~pd.isna(result_df['shot_outcome']),
+            (result_df['event_type'].str.contains('3pt jumpshot', case=False) | result_df['event_type'].str.contains('Three Point', case=False) | result_df['event_type'].str.contains('3pt', case=False)) & ~pd.isna(result_df['shot_outcome']),
+            result_df['event_type'].str.contains(r'(2pt|two point).*?(jumper|jumpshot)', case=False, regex=True) & ~pd.isna(result_df['shot_outcome']),
+            result_df['event_type'].str.contains('dunk', case=False) & ~pd.isna(result_df['shot_outcome']),
+            result_df['event_type'].str.contains('layup', case=False) & ~pd.isna(result_df['shot_outcome'])
         ],
         [
             'freethrow',
